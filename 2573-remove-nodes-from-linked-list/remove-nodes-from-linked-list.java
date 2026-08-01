@@ -1,3 +1,4 @@
+
 class Solution {
     public ListNode removeNodes(ListNode head) {
 
@@ -7,16 +8,15 @@ class Solution {
         ListNode prev = null;
         ListNode curr = head;
 
-        while (curr != null) { // rev LinkedList so we could traverse from back and do prevGreater algo
-
-            ListNode front = curr.next;
+        while (curr != null) {
+            ListNode forward = curr.next;
             curr.next = prev;
             prev = curr;
-            curr = front;
-
+            curr = forward;
         }
 
-        head = prev; // prev is the head of reversed list
+        head = prev;
+
         stack.push(head.val);
         ans.push(head.val);
 
@@ -25,37 +25,35 @@ class Solution {
         while (curr != null) {
 
             while (!stack.isEmpty() && stack.peek() <= curr.val) {
+
                 stack.pop();
             }
 
-            if (stack.isEmpty()) { // matlab koi greater nahi he 
+            if (stack.isEmpty()) {
                 ans.push(curr.val);
-            }
 
+            }
 
             stack.push(curr.val);
 
             curr = curr.next;
 
-        }  // prevGreater stack q with minor adjustments
+        }
 
+        ListNode dummy = new ListNode(-1);
+        curr = dummy;
 
-         // answer is in stack now convert pop the ans and make Linked List of it 
-        head = null;
-        ListNode tail = null;
-
-        while (!ans.isEmpty()) {   
+        while (!ans.isEmpty()) {
 
             ListNode node = new ListNode(ans.pop());
 
-            if (head == null) {
-                head = node;
-                tail = node;
-            } else {
-                tail.next = node;
-                tail = node;
-            }
+            curr.next = node;
+
+            curr = curr.next;
+
         }
-         return head;
+
+        return dummy.next;
+
     }
 }
