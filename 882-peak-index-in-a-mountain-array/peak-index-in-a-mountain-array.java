@@ -9,11 +9,6 @@ class Solution {
 
             int guess = (low + high) / 2;
 
-            if (guess == 0)
-                low = guess + 1;
-            if (guess == n - 1)
-                high = guess - 1;
-
             if (arr[guess] > arr[guess + 1]) {
                 peek = guess;
                 high = guess - 1;
