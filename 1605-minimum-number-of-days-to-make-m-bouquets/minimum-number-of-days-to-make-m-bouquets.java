@@ -30,8 +30,8 @@ class Solution {
 
     }
 
-    public boolean fun(int[] bloomDay, int m, int k, int guess) {
-        int[] arr = bloomDay.clone();
+    public boolean fun(int[] arr, int m, int k, int guess) {
+        
 
         int count = 0;
         int bouquetsMade = 0;
