@@ -1,3 +1,4 @@
+
 class Solution {
     public int shipWithinDays(int[] weights, int days) {
 
@@ -29,26 +30,23 @@ class Solution {
     }
 
     public boolean fun(int[] weights, int days, int guess) {
+        int reqDays=1;
+        int sum=0;
 
-        int weightPerDay = 0;
-        int reqDays = 1;
+        for(int i =0 ;i<weights.length;i++){
 
-        for (int i = 0; i < weights.length; i++) {
-
-            if (weightPerDay + weights[i] <= guess) {
-                weightPerDay += weights[i];
-            } 
-            else {
+            if(sum+weights[i]>guess){
                 reqDays++;
-                weightPerDay = weights[i];
+                sum=weights[i];
+            }
+
+            else{
+                sum+=weights[i];
             }
         }
 
-        if (reqDays > days) {
-            return false;
-        } 
-        else {
-            return true;
-        }
+       return reqDays<=days;
     }
+
+    
 }
