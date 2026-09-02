@@ -1,36 +1,44 @@
 class Solution {
     public boolean isPalindrome(String s) {
-        StringBuilder str = new StringBuilder(); // revise string builder
+        StringBuilder sb = new StringBuilder(); 
 
         for (int i = 0; i < s.length(); i++) { 
             char ch = s.charAt(i);
 
-            if (ch >= 'a' && ch <= 'z') { // once revise Ascii conerstions
-                str.append(ch);
+            if (ch >= 'a' && ch <= 'z') { 
+                sb.append(ch);
             }
             else if (ch >= 'A' && ch <= 'Z') { 
-                str.append((char)(ch + 32));
+                sb.append((char)(ch + 32));
             }
             else if (ch>='0' && ch<='9'){
-                str.append(ch);
+                sb.append(ch);
             }
 
 
         }
+       
+        String str = sb.toString();
+        
+        return f(str,0,str.length()-1);
+    
+        
+    
 
-        int left = 0;
-        int right = str.length() - 1;
+    }
 
-        while (left <= right) { // 2 pointer apprach
+    public static boolean f(String str,int left,int right){
 
-            if (str.charAt(left) != str.charAt(right)) {
-                return false;
-            }
-
-            left++;
-            right--;
+       if(left>=right){
+            return true;
         }
 
-        return true;
+        if(str.charAt(left)!=str.charAt(right)){
+            return false;
+        }
+        
+
+        return f(str,left+1,right-1);
+
     }
 } 
