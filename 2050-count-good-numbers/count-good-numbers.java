@@ -2,7 +2,7 @@ class Solution {
     public int countGoodNumbers(long n) {
         long o; // no of  odd pos
         long e; // no of  even pos 
-        long mod =1000000007;
+        int mod =1000000007;
 
         if (n % 2 == 0) {
             o = n / 2;
@@ -16,7 +16,7 @@ class Solution {
     }
 
     public long calculatePower(int x, long power){
-         long mod =1000000007;
+         int  mod =1000000007;
 
         if (power==0) return 1;
 
