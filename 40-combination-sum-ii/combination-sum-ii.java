@@ -1,43 +1,40 @@
 class Solution {
-    ArrayList<List<Integer>> ans = new ArrayList<>();
+
+    List<List<Integer>> ans = new ArrayList<>();
+
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+
         Arrays.sort(candidates);
-      
-
-         f(0, candidates, 0, new ArrayList<>(), target);
-        return ans;
-   
-        
+        f(0,candidates,0,new ArrayList<>(),target);
+        return ans; 
     }
-     public void f(int idx, int[] arr, int sum,
-                  ArrayList<Integer> list, int target) {
+    
+    public void f(int idx,int[] arr,int sum,ArrayList<Integer> list,int target){
 
-        if (sum == target) {
+        if(sum==target){
             ans.add(new ArrayList<>(list));
             return;
         }
-
-        if (sum > target || idx == arr.length) {
-            return;
-        }
-
-        // Take
-        list.add(arr[idx]);
-        sum += arr[idx];
-    
+        // if( sum > target ) return  // no need that break will handle this // if that break line not witten then we can write this // but writing break is more efficient // understand by  rec tree why so 
         
-        f(idx+1, arr, sum, list, target);
+        for(int i =idx;i<arr.length;i++){
 
-        // Backtrack
-        list.remove(list.size() - 1);
-        sum -= arr[idx];
+            if(i>idx && arr[i]==arr[i-1]) continue;
+            if(sum+arr[i]>target) break ; // return can also be written here //
+            
+            list.add(arr[i]);
+            sum+=arr[i];
 
-        // Not Take
-         while (idx + 1 < arr.length &&
-               arr[idx] == arr[idx + 1]) {
-            idx++;
+            f(i+1,arr,sum,list,target);
+
+            list.remove(list.size()-1);
+            sum-=arr[i];
+
+
         }
 
-        f(idx + 1, arr, sum, list, target);
+
     }
+
+
 }
