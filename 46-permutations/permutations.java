@@ -3,14 +3,14 @@ class Solution {
 
     public List<List<Integer>> permute(int[] nums) {
 
-        f(nums, new ArrayList<>(), new HashSet<>());
+        f(nums, new ArrayList<>(), new boolean [nums.length]);
         return ans;
     }
 
-    public void f(int[] arr, ArrayList<Integer> list, Set<Integer> used) {
+    public void f(int[] arr, ArrayList<Integer> list, boolean[] used) {
 
         // permutation complete ho gayi
-        if (list.size() == arr.length) {
+        if (list.size()== arr.length) {
             ans.add(new ArrayList<>(list));
         }
 
@@ -18,19 +18,21 @@ class Solution {
         for (int i = 0; i < arr.length; i++) {
 
             // agar index already use ho chuka hai, skip karo
-            if (used.contains(i))
-                continue;
+           
+           if(used[i]==true) continue; 
 
             // current element ko permutation me pick karo
             list.add(arr[i]);
-            used.add(i);
+            used[i]=true;
+            
 
             // next position ke liye recursion
             f(arr, list, used);
+            used[i]=false;
 
             // backtrack: current choice undo karo
             list.remove(list.size() - 1);
-            used.remove(i);
+            
         }
     }
 }
