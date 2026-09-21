@@ -6,52 +6,48 @@ class Solution {
         if (root == null)
             return ans;
 
-        Queue<TreeNode> q = new ArrayDeque<>();
-        q.offer(root);
+        Deque<TreeNode> dq = new ArrayDeque<>();
+        dq.offerLast(root);
 
-        // Initially reverse is false because level 0 is even,
-        // so we add it from left to right.
         boolean reverse = false;
 
-        while (!q.isEmpty()) {
+        while (!dq.isEmpty()) {
 
-            // Number of nodes in the current level
-            int levelSize = q.size();
-
-            List<Integer> temp = new ArrayList<>();
+            int levelSize = dq.size();
+            List<Integer> level = new ArrayList<>();
 
             while (levelSize != 0) {
 
-                TreeNode t = q.poll();
+                if (!reverse) {
 
-                // Add the current node
-                temp.add(t.val);
+                    TreeNode node = dq.pollFirst();
 
-                // Add left child for the next level
-                if (t.left != null) {
-                    q.offer(t.left);
+                    level.add(node.val);
+
+                    if (node.left != null)
+                        dq.offerLast(node.left);
+
+                    if (node.right != null)
+                        dq.offerLast(node.right);
                 }
 
-                // Add right child for the next level
-                if (t.right != null) {
-                    q.offer(t.right);
+                else {
+
+                    TreeNode node = dq.pollLast();
+
+                    level.add(node.val);
+
+                    if (node.right != null)
+                        dq.offerFirst(node.right);
+
+                    if (node.left != null)
+                        dq.offerFirst(node.left);
                 }
 
                 levelSize--;
             }
 
-            // If reverse is false, add from left to right
-            if (reverse == false) {
-                ans.add(temp);
-            }
-
-            // If reverse is true, add from right to left
-            else {
-                Collections.reverse(temp);
-                ans.add(temp);
-            }
-
-            // Toggle reverse for the next level
+            ans.add(level);
             reverse = !reverse;
         }
 
