@@ -9,11 +9,13 @@ class Solution {
         Queue<TreeNode> q = new ArrayDeque<>();
         q.offer(root);
 
-        int count = 0;
+        // Initially reverse is false because level 0 is even,
+        // so we add it from left to right.
+        boolean reverse = false;
 
         while (!q.isEmpty()) {
 
-            // Number of nodes in current level
+            // Number of nodes in the current level
             int levelSize = q.size();
 
             List<Integer> temp = new ArrayList<>();
@@ -22,14 +24,15 @@ class Solution {
 
                 TreeNode t = q.poll();
 
-                // Add current node
+                // Add the current node
                 temp.add(t.val);
 
-                // Add children for next level
+                // Add left child for the next level
                 if (t.left != null) {
                     q.offer(t.left);
                 }
 
+                // Add right child for the next level
                 if (t.right != null) {
                     q.offer(t.right);
                 }
@@ -37,18 +40,19 @@ class Solution {
                 levelSize--;
             }
 
-            // Even level -> left to right
-            if (count % 2 == 0) {
+            // If reverse is false, add from left to right
+            if (reverse == false) {
                 ans.add(temp);
             }
 
-            // Odd level -> right to left
+            // If reverse is true, add from right to left
             else {
                 Collections.reverse(temp);
                 ans.add(temp);
             }
 
-            count++;
+            // Toggle reverse for the next level
+            reverse = !reverse;
         }
 
         return ans;
