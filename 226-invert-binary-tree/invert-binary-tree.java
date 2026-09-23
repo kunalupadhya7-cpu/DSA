@@ -1,11 +1,12 @@
 class Solution {
     public TreeNode invertTree(TreeNode root) {
-        return f(root);
+         f(root);
+         return root;
     }
 
-    public TreeNode f(TreeNode node) {
+    public void f(TreeNode node) {
 
-        if (node == null) return null;
+        if (node == null) return ;
 
         // Swap left and right
         TreeNode temp = node.left;
@@ -16,6 +17,5 @@ class Solution {
         f(node.left);
         f(node.right);
 
-        return node;
     }
 }
