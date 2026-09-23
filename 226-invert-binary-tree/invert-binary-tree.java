@@ -1,26 +1,21 @@
 class Solution {
     public TreeNode invertTree(TreeNode root) {
-        Queue<TreeNode> q = new ArrayDeque<>();
-        if(root == null) return root;
-        q.offer(root);
+        return f(root);
+    }
 
-        while(!q.isEmpty()){
-            int levelSize=q.size();
-            
-            while(levelSize!=0){
-                TreeNode node = q.poll();
+    public TreeNode f(TreeNode node) {
 
-                if(node.left!=null) q.offer(node.left);
-                if(node.right!=null) q.offer(node.right);
-                
-                TreeNode temp = node.left;
-                node.left=node.right;
-                node.right=temp;
+        if (node == null) return null;
 
-                levelSize--;
+        // Swap left and right
+        TreeNode temp = node.left;
+        node.left = node.right;
+        node.right = temp;
 
-            }
-        }
-        return root;
+        // Recursively invert both subtrees
+        f(node.left);
+        f(node.right);
+
+        return node;
     }
 }
