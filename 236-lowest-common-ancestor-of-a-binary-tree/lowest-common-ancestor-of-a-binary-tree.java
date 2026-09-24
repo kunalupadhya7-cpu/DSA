@@ -7,30 +7,26 @@ class Solution {
         return lca;
     }
 
-    public boolean dfs(TreeNode node, TreeNode p, TreeNode q) {
+    public int dfs(TreeNode node, TreeNode p, TreeNode q) {
 
-        // Reached the end, so p/q was not found
         if (node == null)
-            return false;
+            return 0;
 
-        // Found p or q
-        if (node == p || node == q) {
-            lca = node;
-            return true;
+        int left = dfs(node.left, p, q); // left se pucho ki kitno ko boss karsakta he
+        int right = dfs(node.right, p, q); // right se pucho ki kitno ko boss karsakta he
+
+        int self = 0;
+        if (node == p || node == q) {  // kya khud ko boss karsakta he ?
+            self = 1;
         }
 
-        // Check if p/q is found in the left subtree
-        boolean foundLeft = dfs(node.left, p, q);
 
-        // Check if p/q is found in the right subtree
-        boolean foundRight = dfs(node.right, p, q);
+        if (left + right + self == 2 && lca == null) // total kitno ko karraha he 
+                                                     // 0 kisiko nahi ,1 ek ko,2 dono ko 
+            lca = node;                              // reccrsion me ans niche se aata he i.e bt so jo pehle mila vahi lowest thats why
+                                                     // and lca==null lika matlab sab se pehla ans vahi lca hoga 
+        
 
-        // If both sides found p/q, current node is their LCA
-        if (foundLeft && foundRight)
-            lca = node;
-
-        // Tell the parent whether p or q was found in this subtree
-        return foundLeft || foundRight;
+        return left + right + self; // return ki curr node kitno ka boss he 
     }
-} 
-// dam i found it on own 
+} // learned this from padho with pratysuh bhaya
