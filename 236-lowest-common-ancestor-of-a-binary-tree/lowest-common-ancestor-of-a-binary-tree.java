@@ -3,11 +3,11 @@ class Solution {
     TreeNode lca = null;
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        f(root, p, q);
+        dfs(root, p, q);
         return lca;
     }
 
-    public boolean f(TreeNode node, TreeNode p, TreeNode q) {
+    public boolean dfs(TreeNode node, TreeNode p, TreeNode q) {
 
         // Reached the end, so p/q was not found
         if (node == null)
@@ -20,10 +20,10 @@ class Solution {
         }
 
         // Check if p/q is found in the left subtree
-        boolean foundLeft = f(node.left, p, q);
+        boolean foundLeft = dfs(node.left, p, q);
 
         // Check if p/q is found in the right subtree
-        boolean foundRight = f(node.right, p, q);
+        boolean foundRight = dfs(node.right, p, q);
 
         // If both sides found p/q, current node is their LCA
         if (foundLeft && foundRight)
