@@ -1,4 +1,5 @@
 class Solution {
+
     TreeNode lca = null;
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
@@ -7,26 +8,29 @@ class Solution {
     }
 
     public boolean f(TreeNode node, TreeNode p, TreeNode q) {
-        boolean l = false;
-        boolean r = false;
 
+        // Reached the end, so p/q was not found
         if (node == null)
             return false;
 
-        if (f(node.left, p, q))
-            l = true;
-
-        if (f(node.right, p, q))
-            r = true;
-
+        // Found p or q
         if (node == p || node == q) {
             lca = node;
             return true;
         }
 
-        if (l && r)
+        // Check if p/q is found in the left subtree
+        boolean foundLeft = f(node.left, p, q);
+
+        // Check if p/q is found in the right subtree
+        boolean foundRight = f(node.right, p, q);
+
+        // If both sides found p/q, current node is their LCA
+        if (foundLeft && foundRight)
             lca = node;
 
-        return l || r;
+        // Tell the parent whether p or q was found in this subtree
+        return foundLeft || foundRight;
     }
-}
+} 
+// dam i found it on own 
