@@ -2,25 +2,21 @@ class Solution {
 
     public TreeNode searchBST(TreeNode root, int val) {
 
-        return dfs(root, val);
+       
+        if (root == null)  return null;
 
-    }
+        if (root.val == val)  return root;
 
-    public TreeNode dfs(TreeNode node, int val) {
-
-        if (node == null)  return null;
-
-        if (node.val == val)  return node;
-
-        TreeNode l = dfs(node.left, val);
+        TreeNode l = searchBST(root.left, val);
         if(l!=null) return l;
 
-        TreeNode r = dfs(node.right, val);
+        TreeNode r = searchBST(root.right, val);
         if(r!=null) return r;
 
         return null;
 
-
     }
 
-} // same as prev sub just return type is TreeNode
+ 
+
+}
