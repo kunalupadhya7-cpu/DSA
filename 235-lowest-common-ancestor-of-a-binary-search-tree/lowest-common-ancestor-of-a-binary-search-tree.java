@@ -1,24 +1,27 @@
+// same as prev sol just return type is TreeNode
+//for dry run that is easy
+//for rec thinking in this case this is easy readable
+
 class Solution {
 
-    TreeNode lca = null;
+   
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
-        dfs(root, p, q);
+        return dfs(root, p, q);
 
-        return lca;
+       
     }
 
-    public boolean dfs(TreeNode node, TreeNode p, TreeNode q) {
+    public TreeNode dfs(TreeNode node, TreeNode p, TreeNode q) {
 
-        if (node == null)
-            return false;
+        if (node == null) return null;
+            
 
-        if (node == p || node == q) {
-            lca = node;
-            return true;
-        }
-
+        if (node == p || node == q)  return node;
+          
+            
+        
 
         // agar dono ek taraf he to node ca hosakta he lekin lca nahi 
         // ab ham left subtree me search karenge lca
@@ -34,9 +37,8 @@ class Solution {
         // agar maan lo dono if and else if galat he matlab p and q alag alag side me he
         // matlab node hi lca he 
 
-        lca=node;
+      return node;
 
-        return true;
 
     }
 }
