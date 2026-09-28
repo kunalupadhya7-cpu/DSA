@@ -1,45 +1,70 @@
 class Solution {
 
-    List<Integer> list = new ArrayList<>(); 
+    Deque<TreeNode> asc = new ArrayDeque<>();
+    Deque<TreeNode> dsc = new ArrayDeque<>();
 
     public boolean findTarget(TreeNode root, int k) {
 
-        inorder(root); // makes list as sorted array
-        
-        // from here its normal 2 pointer 2 sum approch
+        TreeNode t = root;
 
-        int l=0;     
-        int r=list.size()-1;
-
-        while(l<r){
-
-            int sum= list.get(l)+list.get(r);
-
-             if(sum==k) return true;
-
-             else if(sum>k) r--;
-          
-             else l++;
-             
-             
-          
+       
+        while (t != null) {
+            asc.push(t);
+            t = t.left;
         }
-        
+
+       
+        t = root;
+
+        while (t != null) {
+            dsc.push(t);
+            t = t.right;
+        }
+
+        int l = getSmall();
+        int r = getBig();
+
+        while (l < r) {
+
+            if (l + r == k) {
+                return true;
+            }
+
+            if (l + r < k) {
+                l = getSmall();   
+            } else {
+                r = getBig();    
+            }
+        }
 
         return false;
-        
-
-        
-     
     }
 
-    public void inorder(TreeNode node){
+    public int getSmall() {
 
-        if(node==null) return ;
+        TreeNode small = asc.pop();
 
-        inorder(node.left);
-        list.add(node.val);
-        inorder(node.right);
+        TreeNode rightChild = small.right;
 
+        while (rightChild != null) {
+            asc.push(rightChild);
+            rightChild = rightChild.left;
+        }
+
+        return small.val;
+    }
+
+    public int getBig() {
+
+        TreeNode big = dsc.pop();
+
+        TreeNode leftChild = big.left;
+
+        while (leftChild != null) {
+            dsc.push(leftChild);
+            leftChild = leftChild.right;
+        }
+
+        return big.val;
     }
 }
