@@ -2,13 +2,14 @@
 class Solution {
 
     List<List<Integer>> ans = new ArrayList<>();
+    List<Integer> list = new ArrayList<>();
 
     public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
-        dfs(root, 0, targetSum, new ArrayList<>());
+        dfs(root, 0, targetSum);
         return ans;
     }
 
-    public void dfs(TreeNode node, int sum, int k, List<Integer> list) {
+    public void dfs(TreeNode node, int sum, int k) {
 
         // Base case
         if (node == null)
@@ -17,15 +18,20 @@ class Solution {
         sum += node.val;
         list.add(node.val);
 
-        // Check valid root-to-leaf path
-        if (sum == k && node.left == null && node.right == null) {
-            ans.add(new ArrayList<>(list));
+       
+        if (node.left == null && node.right == null) {
+            if (sum == k) {
+                ans.add(new ArrayList<>(list));
+                list.remove(list.size() - 1);
+                return;
+            }
         }
 
-        dfs(node.left, sum, k, list);
-        dfs(node.right, sum, k, list);
+        dfs(node.left, sum, k);
+        dfs(node.right, sum, k);
 
-        // Backtrack
+
         list.remove(list.size() - 1);
+        return;
     }
 }
