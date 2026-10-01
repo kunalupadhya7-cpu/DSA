@@ -1,29 +1,18 @@
 
 class Solution {
-    int minCount=Integer.MAX_VALUE; // imp step 
     public int minDepth(TreeNode root) {
-        if(root==null) return 0; // for one failed case 52/53
-        dfs(root,0);
-        return minCount;
+        if(root==null) return 0;
+        int l = minDepth(root.left);
+        int r =minDepth(root.right);
 
-    }
-
-    
-    public void dfs(TreeNode node, int count) {
-        if (node == null)  return; 
-           
-        
-        count++;
-        
-        if (node.left == null && node.right == null) {
-            minCount = Math.min(minCount, count);
-            return;
-
+        if(root.left==null){
+            return 1+r;
+        }
+        if(root.right==null){
+            return 1+l;
         }
 
+        return 1+Math.min(l,r);
         
-        dfs(node.left, count);
-        dfs(node.right, count);
     }
-
 }
