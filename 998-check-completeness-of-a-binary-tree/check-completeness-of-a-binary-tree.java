@@ -29,10 +29,10 @@ class Solution {
             while(levelSize!=0){
                 
                 TreeNode t= q.poll();
-                if(t==null){
-                    levelSize--;
-                    continue;
-                }
+                //if(t==null){
+                //    levelSize--;
+                //    continue;
+               // }
                
               if(level==lastLevel-1){
                 q.offer(t.left);
