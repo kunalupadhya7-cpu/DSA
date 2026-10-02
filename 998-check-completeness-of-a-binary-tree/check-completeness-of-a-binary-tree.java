@@ -1,27 +1,40 @@
 
 class Solution {
-
     public boolean isCompleteTree(TreeNode root) {
-        boolean nullSeen=false;
-
-        Deque<TreeNode> q =new LinkedList<>();
+        Deque<TreeNode> q = new LinkedList<>();
+        List<TreeNode> list = new ArrayList<>();
         q.offer(root);
+        list.add(root);
 
-        while(!q.isEmpty()){
-            TreeNode t =q.pop();
+        while (!q.isEmpty()) {
 
-            if(t==null) nullSeen=true;
+            TreeNode t = q.poll();
 
-            else{
-                if(nullSeen) return false;
+            if (t == null) {
 
-                q.offer(t.left);
-                q.offer(t.right);
+                continue;
             }
 
-           
+            q.offer(t.left);
+            list.add(t.left);
+            q.offer(t.right);
+            list.add(t.right);
+
+        }
+
+        int i = 0;
+        while (i < list.size() && list.get(i) != null) {
+            i++;
+        }
+
+        while (i < list.size()) {
+            if (list.get(i) != null)
+                return false;
+            i++;
         }
 
         return true;
+
     }
+
 }
