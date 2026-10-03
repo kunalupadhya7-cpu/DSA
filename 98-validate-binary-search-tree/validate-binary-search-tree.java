@@ -1,22 +1,16 @@
-// brute force
 class Solution {
 
-    List<Integer> list = new ArrayList<>();
-
     public boolean isValidBST(TreeNode root) {
-        inorder(root);
-
-        for(int i =1 ;i<list.size();i++){
-            if(list.get(i-1) >=list.get(i)) return false;
-        }
-        return true;
+        return fun(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
 
-    public void inorder (TreeNode node ){
-        if(node==null) return;
+    boolean fun(TreeNode node, long min, long max) {
+        if (node == null) return true;
 
-        inorder(node.left);
-        list.add(node.val);
-        inorder(node.right);
+        if (node.val <= min || node.val >= max)
+            return false;
+
+        return fun(node.left, min, node.val)
+            && fun(node.right, node.val, max);
     }
 }
